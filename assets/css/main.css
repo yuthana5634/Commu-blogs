@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✨ เพิ่มโค้ดอนิเมชันค่อยๆ เฟดสไตล์มินิมอลที่ท้ายไฟล์ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px); /* ลอยขึ้นมาจากด้านล่างนิดๆ */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* สร้างชื่อคลาสเอาไว้เรียกใช้งาน */
+.animate-fade-in-up {
+  animation: fadeInUp 7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
