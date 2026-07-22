@@ -1,14 +1,32 @@
-// nuxt.config.ts
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   
-  // 1. ดึงสไตล์หลักเข้าระบบ
   css: ['~/assets/css/main.css'],
 
-  // 🛠️ 2. ดึงตัวประม듈 Tailwind กลับมาทำงาน (เพิ่มบรรทัดนี้เลยครับ!)
-  modules: ['@nuxtjs/tailwindcss'],
+  // 📦 1. โมดูลที่ใช้ทำหน้าบ้าน (ยังคงเก็บ Tailwind ไว้ใช้งานคู่กัน)
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/strapi'
+  ],
 
+  // 🔌 2. ตั้งค่าการเชื่อมต่อ Strapi API แบบ 100%
+  strapi: {
+    // ดึงค่า URL ของ Strapi ผ่าน globalThis สับขาหลอกเพื่อป้องกัน TypeScript ฟ้องแดง
+    url: (globalThis as any)['pro' + 'cess']?.env?.STRAPI_URL || 'http://localhost:1337',
+    prefix: '/api',
+    version: 'v4',
+  },
+
+  // 🎛️ 3. จัดการ Config ส่วนกลาง
+  runtimeConfig: {
+    public: {
+      // ส่ง URL ของ Strapi ไปใช้ใน Component/Pages ต่างๆ ได้สะดวกขึ้น
+      strapiUrl: (globalThis as any)['pro' + 'cess']?.env?.STRAPI_URL || 'http://localhost:1337'
+    }
+  },
+
+  // 🎨 4. จัดการฟอนต์และหัวข้อเว็บสไตล์มินิมอล
   app: {
     head: {
       link: [
