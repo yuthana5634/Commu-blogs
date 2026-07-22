@@ -4,16 +4,15 @@ export default defineNuxtConfig({
   
   css: ['~/assets/css/main.css'],
 
-  // 📦 1. โมดูลที่ใช้ทำหน้าบ้าน (ยังคงเก็บ Tailwind ไว้ใช้งานคู่กัน)
+  // 📦 1. โมดูลที่ใช้ทำหน้าบ้าน
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/strapi'
   ],
 
-  // 🔌 2. ตั้งค่าการเชื่อมต่อ Strapi API แบบ 100%
+  // 🔌 2. ตั้งค่าการเชื่อมต่อ Strapi API
   strapi: {
-    // ดึงค่า URL ของ Strapi ผ่าน globalThis สับขาหลอกเพื่อป้องกัน TypeScript ฟ้องแดง
-    url: (globalThis as any)['pro' + 'cess']?.env?.STRAPI_URL || 'http://localhost:1337',
+    url: process.env.STRAPI_URL || process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
     prefix: '/api',
     version: 'v4',
   },
@@ -21,8 +20,7 @@ export default defineNuxtConfig({
   // 🎛️ 3. จัดการ Config ส่วนกลาง
   runtimeConfig: {
     public: {
-      // ส่ง URL ของ Strapi ไปใช้ใน Component/Pages ต่างๆ ได้สะดวกขึ้น
-      strapiUrl: (globalThis as any)['pro' + 'cess']?.env?.STRAPI_URL || 'http://localhost:1337'
+      strapiUrl: process.env.STRAPI_URL || process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
     }
   },
 
